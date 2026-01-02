@@ -6,7 +6,7 @@ class KakaoExtractor:
         # 모듈 로더에서 표시될 이름
         self.name = "KakaoTalk Token & UUID Extractor"
         self.priority = 50  # 분석 단계 (중간 순위)
-
+        self.context = context  # 전달받은 공유 객체 저장
         # 분석 타겟 호스트
         self.auth_host = "auth.kakao.com"
         self.api_host = "kauth.kakao.com"
