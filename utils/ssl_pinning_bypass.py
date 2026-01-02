@@ -4,7 +4,7 @@ class SSLPinningBypass:
     def __init__(self):
         self.name = "SSL Pinning Bypass (Frida-based)"
         self.priority = 10  # 가장 먼저 실행되어야 함
-        
+        self.context = context
         # 앱이 시스템 인증서를 신뢰하도록 강제하는 Frida 스크립트
         self.frida_script = """
         /* SSL Pinning Bypass Script for KakaoTalk & Generic Apps */
