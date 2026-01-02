@@ -1,4 +1,4 @@
-ㅣimport re
+import re
 from mitmproxy import http
 
 class KakaoExtractor:
