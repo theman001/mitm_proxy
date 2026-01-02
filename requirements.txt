@@ -1,0 +1,18 @@
+# --- Core Proxy Engine ---
+mitmproxy>=10.0.0      # 메인 프록시 및 패킷 분석 엔진
+
+# --- Analysis & Extraction ---
+pyOpenSSL>=23.0.0      # SSL/TLS 인증서 처리
+cryptography>=41.0.0   # 암호화 데이터 복호화 지원
+
+# --- SSL Pinning Bypass (Frida) ---
+frida-tools>=12.0.0    # SSL Pinning 해제용 Frida CLI 도구
+frida>=16.0.0          # Frida 파이썬 바인딩
+
+# --- SQL Injection Engine (Legacy Support) ---
+requests>=2.31.0       # HTTP 요청 전송 엔진
+tabulate>=0.9.0        # 추출 데이터 테이블 출력용
+colorama>=0.4.6        # 터미널 UI 색상 가독성 향상
+
+# --- Utilities ---
+keyboard>=0.13.5       # Blind SQLi 중단 인터럽트 감지 (관리자 권한 필요)
